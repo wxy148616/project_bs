@@ -18,7 +18,7 @@ from django.contrib import admin
 from bsapp import views as bs_views
 
 urlpatterns = [
-    url(r'^login/', bs_views.login, name = 'login'),
+    url(r'^$', bs_views.login, name = 'login'),
     url(r'^regist/', bs_views.regist, name = 'regist'),
     url(r'^home/', bs_views.index, name = 'home'),
     url(r'^add/$', bs_views.add, name = "add"),
