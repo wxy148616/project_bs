@@ -21,7 +21,5 @@ urlpatterns = [
     url(r'^$', bs_views.login, name = 'login'),
     url(r'^regist/', bs_views.regist, name = 'regist'),
     url(r'^home/', bs_views.index, name = 'home'),
-    url(r'^add/$', bs_views.add, name = "add"),
-    url(r'^add/(\d+)/(\d+)/$', bs_views.add2, name = "add2"),
     url(r'^admin/', admin.site.urls),
 ]

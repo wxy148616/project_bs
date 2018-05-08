@@ -36,6 +36,13 @@
     <div class="content-login-description">没有账号？</div>
     <div><a href="{% url 'regist' %}" class="content-login-link">注册</a></div>
 </div>
+    <div>
+    <span>
+        {% if msg == False %}
+        {{ data }}
+        {% endif %}
+    </span>
+    </div>
 {% endblock %}
 
 
