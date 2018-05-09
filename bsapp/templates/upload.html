@@ -1,0 +1,34 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+    <h2 align="center">文件上传</h2>
+    <form action="" method="POST" class="form-inline" onsubmit="return fun()">
+        {% csrf_token %}
+        <div class="form-group">
+            <span class="btn">选择文件</span>
+            <input type="file" class="form-control" name="files" id="files">
+            <input class="btn btn-primary" type="submit" id="sub" value="开始上传">
+        </div>
+    </form>
+{% endblock %}
+
+{% block js %}
+
+    <script type="text/javascript">
+
+        function fun() {
+            var msg = document.getElementById('files').value;
+            if (msg == "") {
+                alert("请先选择文件");
+                return false;
+            }
+        }
+
+        var msg = "{{ msg }}";
+        if (msg == "success") {
+            alert('{{ data }}')
+        }
+    </script>
+{% endblock %}
+

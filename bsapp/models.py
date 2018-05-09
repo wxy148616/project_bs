@@ -20,7 +20,17 @@ class Pone(models.Model):
 
 class Ptwo(models.Model):
     content = models.CharField(max_length = 200)
-    timestamp = models.CharField(default = timezone.localtime(timezone.now()).strftime("%Y-%m-%d %H:%M:%S"), max_length = 20)
+    timestamp = models.DateTimeField(auto_now = True)
 
     def __unicode__(self):
         return self.content
+
+
+class Pthree(models.Model):
+    # img = models.ImageField(upload_to='img')
+    name = models.CharField(max_length = 30, null = True)
+    files = models.FileField(u'文件', upload_to = './files')
+
+    def __unicode__(self):
+        return self.name
+

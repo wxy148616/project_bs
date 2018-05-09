@@ -3,7 +3,8 @@ from __future__ import unicode_literals
 
 from django.shortcuts import render
 from django.http import HttpResponse
-from models import Pone, Ptwo
+from models import *
+from django.conf import settings
 import json, re
 
 
@@ -64,13 +65,20 @@ def index(request):
         data = {"success": 'true', "content": content}
         return HttpResponse(json.dumps(data))
 
+
 def upload(request):
-    if request.method == 'POST':# 获取对象
-        obj = request.FILES.get('fafafa')
-        import os
-	f = open(os.path.join(BASE_DIR, 'static', 'pic', obj.name), 'wb')
-        for chunk in obj.chunks():
-            f.write(chunk)
-        f.close()
-        return  HttpResponse('OK')
-    return render(request, 'ceshi.html')
+    if request.method == "GET":
+        return render(request, 'upload.html')
+    elif request.method == "POST":
+        if request.POST.get('files', ''):
+            uf = request.FILES['files']
+            ufname = '%s/%s' % (settings.MEDIA_ROOT, uf.name)
+            with open(ufname, 'wenjian') as f:
+                for x in uf.chunks():
+                    f.write(x)
+            return render(request, 'upload.html', context = {dict(
+                data = "上传成功",
+                )})
+        return render(request, "upload.html", context = dict(data = "请先选择文件", msg = "success"))
+    return render(request, 'upload.html')
+
