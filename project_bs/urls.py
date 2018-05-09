@@ -21,5 +21,6 @@ urlpatterns = [
     url(r'^$', bs_views.login, name = 'login'),
     url(r'^regist/', bs_views.regist, name = 'regist'),
     url(r'^home/', bs_views.index, name = 'home'),
+    url(r'^ceshi/', bs_views.upload, name = 'ceshi'),
     url(r'^admin/', admin.site.urls),
 ]

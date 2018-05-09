@@ -63,3 +63,14 @@ def index(request):
         obj.save()
         data = {"success": 'true', "content": content}
         return HttpResponse(json.dumps(data))
+
+def upload(request):
+    if request.method == 'POST':# 获取对象
+        obj = request.FILES.get('fafafa')
+        import os
+	f = open(os.path.join(BASE_DIR, 'static', 'pic', obj.name), 'wb')
+        for chunk in obj.chunks():
+            f.write(chunk)
+        f.close()
+        return  HttpResponse('OK')
+    return render(request, 'ceshi.html')
