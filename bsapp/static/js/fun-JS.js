@@ -1,5 +1,5 @@
 function oBlur_1() {
-    var a = document.getElementsByTagName("input")[0].value;
+    var a = document.getElementById("input1").value;
     if (!a) {
         document.getElementById("remind_1").innerHTML = "请输入用户名";
         document.getElementById("change_margin_1").style.marginBottom = 1 + "px";
@@ -10,7 +10,7 @@ function oBlur_1() {
 }
 
 function oBlur_2() {
-    var b = document.getElementsByTagName("input")[1].value;
+    var b = document.getElementById("input2").value;
     if (!b) {
         document.getElementById("remind_2").innerHTML = "请输入密码";
         document.getElementById("change_margin_2").style.marginBottom = 1 + "px";
@@ -34,8 +34,8 @@ function oFocus_2() {
 }
 
 function submitTest(d) {
-    var a = document.getElementsByTagName("input")[1].value;
-    var b = document.getElementsByTagName("input")[0].value;
+    var a = document.getElementById("input1").value;
+    var b = document.getElementById("input2").value;
 
     if (!a && !b) {
         document.getElementById("remind_1").innerHTML = "请输入用户名！";

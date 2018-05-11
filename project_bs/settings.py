@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$$7lqnor3aqen%m9uryos^&=-qp#1_)3c+ze4q)!4a24q%o*)e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -127,6 +127,8 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media_bs')
+MEDIA_ROOT = "/Users/wangxvyang/Desktop/"
 
 
+SESSION_COOKIE_AGE = 60 * 10
+SESSION_EXPIRE_AT_BROWSER_CLOSE = False

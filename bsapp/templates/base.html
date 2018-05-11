@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #e3e3e3;">
 <head>
     <meta charset="UTF-8">
 
@@ -10,15 +10,61 @@
         <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
               integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
               crossorigin="anonymous">
+        <link rel="stylesheet" href="{% static 'css/daohang.css' %}">
 
     {% endblock %}
 
 </head>
 
 
-<body>
+<body style="background-color: #e3e3e3;">
 
-{% block nav %}导航栏{% endblock %}
+{% block nav %}
+    <ul class="hList">
+        <li class="lics">
+            <a href="#click" style="text-decoration: none;" class="menu">
+                <h2 class="menu-title">首页</h2>
+                <ul class="menu-dropdown ulcs">
+                    <li>发言</li>
+                </ul>
+            </a>
+        </li>
+        <li>
+            <a href="#click" style="text-decoration: none;" class="menu">
+                <h2 class="menu-title menu-title_2nd">上传</h2>
+                <ul class="menu-dropdown ulcs">
+                    <li>文件</li>
+                    <li>图片</li>
+                    <li>音乐</li>
+                </ul>
+            </a>
+        </li>
+        <li>
+            <a href="#click" style="text-decoration: none;" class="menu">
+                <h2 class="menu-title menu-title_3rd">下载</h2>
+                <ul class="menu-dropdown ulcs">
+                    <li>文件</li>
+                    <li>图片</li>
+                    <li>音乐</li>
+
+                </ul>
+            </a>
+        </li>
+        <li>
+            <a href="#click" style="text-decoration: none;" class="menu">
+                <h2 class="menu-title menu-title_4th">删除</h2>
+                <ul class="menu-dropdown ulcs">
+                    <li>文件</li>
+                    <li>图片</li>
+                    <li>音乐</li>
+                    <li style="color: red">注销账户</li>
+                </ul>
+            </a>
+        </li>
+    </ul>
+
+
+{% endblock %}
 
 {% block content %}主体部分{% endblock %}
 

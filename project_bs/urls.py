@@ -20,7 +20,9 @@ from bsapp import views as bs_views
 urlpatterns = [
     url(r'^$', bs_views.login, name = 'login'),
     url(r'^regist/', bs_views.regist, name = 'regist'),
-    url(r'^home/', bs_views.index, name = 'home'),
+    url(r'^home/', bs_views.home, name = 'home'),
     url(r'^upload/', bs_views.upload, name = 'upload'),
+    url(r'^download/', bs_views.file_download, name = 'download'),
+    url(r'^delete/', bs_views.delete_file, name = 'delete'),
     url(r'^admin/', admin.site.urls),
 ]

@@ -1,15 +1,13 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" style="background-color: #e3e3e3">
 <head>
     <meta charset="UTF-8">
     <title>注册页面</title>
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
 <body>
-<header>
-    <div class="header-line"></div>
-</header>
+
 <div class="content">
     <h1 class="content-title">创建账户</h1>
     <div class="content-form">
@@ -21,12 +19,12 @@
             </div>
             <p id="remind_1"></p>
             <div id="change_margin_2">
-                <input class="password" type="password" name="psw" placeholder="请输入密码" onblur="oBlur_2()"
+                <input id="psw" class="password" type="password" name="psw" placeholder="请输入密码" onblur="oBlur_2()"
                        onfocus="oFocus_2()">
             </div>
             <p id="remind_2"></p>
             <div id="change_margin_4">
-                <input id="psw" class="phone" type="text" name="phone" placeholder="请输入手机号">
+                <input id="phone" class="phone" type="text" name="phone" placeholder="请输入手机号">
             </div>
             <p id="remind_4"></p>
             <div id="change_margin_3">

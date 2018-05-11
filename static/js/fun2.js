@@ -59,7 +59,5 @@ function submitTest() {
         document.getElementById("change_margin_2").style.marginBottom = 1 + "px";
         document.getElementById("change_margin_3").style.marginTop = 2 + "px";
         return false;
-    } else if (name) {
-        alert("逗你呢，真注册啊！")
     }
 }

@@ -6,12 +6,10 @@
 {% block css %}<link rel="stylesheet" href="{% static 'css/style-css.css' %}">{% endblock %}
 
 {% block nav %}
-<header>
-    <div class="header-line"></div>
-</header>
 {% endblock %}
 
 {% block content %}
+<div style="color: #99000c; text-align: center">{{ content }}</div>
 
 <div class="content">
     <h1 class="content-title">登录</h1>
@@ -19,12 +17,12 @@
         <form id="form_sample_eventAdd" action="{% url 'login' %}" method="POST" onsubmit="return submitTest('login')">
             {% csrf_token %}
             <div id="change_margin_1">
-                <input type="text" class="user" name="name" placeholder="请输入用户名" onblur="oBlur_1()"
+                <input id="input1" type="text" class="user" name="name" placeholder="请输入用户名" onblur="oBlur_1()"
                        onfocus="oFocus_1()">
             </div>
             <p id="remind_1"></p>
             <div id="change_margin_2">
-                <input class="password" type="password" name="psw" placeholder="请输入密码" onblur="oBlur_2()"
+                <input id="input2" class="password" type="password" name="psw" placeholder="请输入密码" onblur="oBlur_2()"
                        onfocus="oFocus_2()">
             </div>
             <p id="remind_2"></p>
@@ -48,9 +46,4 @@
 
 {% block js %}
 <script src="../static/js/fun-JS.js"></script>
-    <script>$("#form_sample_eventAdd input").val("");
-</script>
 {% endblock %}
-
-
-</html>
