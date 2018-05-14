@@ -127,7 +127,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = "/Users/wangxvyang/Desktop/"
+MEDIA_ROOT = "/Users/wangxvyang/Desktop/media_bs"
 
 
 SESSION_COOKIE_AGE = 60 * 10

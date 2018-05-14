@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse, FileResponse, HttpResponseRedirect
 from models import *
-from django.conf import settings
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json, re
 import os
 import sys
@@ -76,13 +76,22 @@ def home(request):
 
 
 def upload(request):
+    files_list = Pthree.objects.all().values_list('id', 'name', 'files').order_by('-id')
+    paginator = Paginator(files_list, 5)
     if request.method == "GET":
+        page = request.GET.get('page')
+        try:
+            customer = paginator.page(page)
+        except PageNotAnInteger:
+            customer = paginator.page(1)
+        except EmptyPage:
+            customer = paginator.page(paginator.num_pages)
         user_name = request.session.get('name')
         if user_name:
-            files_list = Pthree.objects.all().values_list('id', 'name', 'files')
             if files_list:
                 return render(request, 'upload.html', context = dict(
                     files_list = files_list,
+                    cus_list = customer,
                     msg = "200"
                     ))
             return render(request, 'upload.html', context = dict(
@@ -91,20 +100,21 @@ def upload(request):
                 ))
         return render(request, 'login.html', context = dict(
             status=10,
-            content="登录超时，请重新登录"
+            content=u"登录超时，请重新登录"
             ))
     elif request.method == "POST":
         uf = request.FILES.get('files')
+        name = request.POST.get('name')
         if uf:
-            ufname = u'%s/%s' % (settings.MEDIA_ROOT, uf.name)
+            ufname = u'/Users/wangxvyang/Desktop/media_bs/%s' % uf.name
             obj = Pthree()
-            obj.name = uf.name
+            obj.name = name
             obj.files = uf
             obj.save()
             with open(ufname, 'wb') as f:
                 for x in uf.chunks():
                     f.write(x)
-            files_list = Pthree.objects.all().values_list('id', 'name', 'files')
+            files_list = Pthree.objects.all().values_list('id', 'name', 'files').order_by('-id')[:5]
             return render(request, 'upload.html', context = dict(
                 files_list=files_list,
                 data = u"上传成功",
@@ -120,7 +130,7 @@ def file_download(request):
         f_id = request.GET.get('id')
         fname = str(Pthree.objects.get(id=f_id).files).decode('utf-8')
         name = re.sub(r"(.*?)(?=/)/", "", fname)
-        src = u'/Users/wangxvyang/Desktop/media_bs/%s' % fname
+        src = u'/Users/wangxvyang/Desktop/%s' % fname
         try:
             file = open(src, 'rb')
             response = FileResponse(file)

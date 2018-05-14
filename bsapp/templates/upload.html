@@ -1,28 +1,43 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        });
+    </script>
+    <script src="{% static 'js/upload.js' %}">
+
+    </script>
+{% endblock %}
+
+
 {% block content %}
-    <h2 align="center">文件上传</h2>
-    <form action="" method="POST" class="form-inline" enctype="multipart/form-data" onsubmit="return fun()">
-        {% csrf_token %}
-        <div class="form-group">
-            <div>
-                <span class="btn">文件名称</span>
-                <input type="text"  placeholder="请输入文件名" name="name">
+    <div>
+        <h2 align="center">文件上传</h2>
+        <form action="" id="f1" method="POST" class="form-inline" enctype="multipart/form-data" onsubmit="return fun()">
+            {% csrf_token %}
+            <div class="form-group">
+                <div>
+                    <span class="btn">文件名称</span>
+                    <input type="text" placeholder="请输入文件名" name="name">
+                </div>
+                <span class="btn">选择文件</span>
+                <input type="file" class="form-control" name="files" id="files">
+                <button class="btn btn-primary" type="submit" id="sub">开始上传</button>
             </div>
-            <span class="btn">选择文件</span>
-            <input type="file" class="form-control" name="files" id="files">
-            <input class="btn btn-primary" type="submit" id="sub" value="开始上传">
-        </div>
-    </form>
-    <table class="table table-striped">
-    <tr>
-        <td><b>编号</b></td>
-        <td><b>文件名称</b></td>
-        <td><b>路径名称</b></td>
-        <td style="text-align:center;"><b>编辑</b></td>
-    </tr>
-        {% for files in files_list %}
+        </form>
+    </div>
+    <table class="table table-striped" style="margin-top: 6%;">
+        <tr>
+            <td><b>编号</b></td>
+            <td><b>文件名称</b></td>
+            <td><b>路径名称</b></td>
+            <td style="text-align:center;"><b>编辑</b></td>
+        </tr>
+        {% for files in cus_list %}
             <tr>
                 <td>{{ files.0 }}</td>
                 <td>{{ files.1 }}</td>
@@ -30,77 +45,40 @@
                 <td style="text-align:right;">
                     <a class="btn btn-info" href="/download/?id={{ files.0 }}">下载</a>
                     <button type="button" onclick="tantan({{ files.0 }})" class="btn btn-danger">删除</button>
-
                 </td>
             </tr>
-
         {% endfor %}
-
     </table>
 
+
+    {% if cus_list.has_previous %}
+            <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous">
+                <span class="btn" aria-hidden="true">&laquo;</span>
+            </a>
+    {% endif %}
+    {% for pg in cus_list.paginator.page_range %}
+        {% if cus_list.number == pg %}
+            <span style="background-color: rgba(176,145,110,0.49)" class="btn"><a href="?page={{ pg }}">{{ pg }}</a></span>
+        {% else %}
+            <span class="btn"><a href="?page={{ pg }}">{{ pg }}</a></span>
+        {% endif %}
+    {% endfor %}
+
+    {% if cus_list.has_next %}
+            <a href="?page={{ cus_list.next_page_number }}" aria-label="Next">
+                <span class="btn" aria-hidden="true">&raquo;</span>
+            </a>
+
+
+    {% endif %}
+
+
+    <div style="text-align: center">
+        {% if msg == "upload_fail" %}
+            {{ content }}
+        {% endif %}
+    </div>
 {% endblock %}
 
-{% block js %}
-    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
-    <script type="text/javascript">
-        function tantan(a) {
-            var result = confirm('狠心删除 T_T');
-            if (result) {
-                $.ajaxSetup({
-                    data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-                });
-                $.ajax({
-                    type: 'POST',
-                    url: {% url 'delete' %},
-                    data: {'id': a},
-                    dataType: "json",
-                    success: function (s_data) {
-                        if (s_data.status == 200) {
-                         alert('删除成功，如果反悔，请在24小时之内询问！');
-                         location.reload();
-                        } else if (s_data.status == 300) {
-                            alert("没有找到要删除的文件，可能已丢失")
-                        }
-                    },
-                });
-            } else {
-                return false;
 
-            }
-        }
-
-        function fo(sr) {
-            $.ajaxSetup({
-                data: {csrfmiddlewaretoken: '{{ csrf_token }}'},
-            });
-            $.ajax({
-                type: 'POST',
-                url: {% url 'download' %},
-                data: {'data': sr},
-                success: function (s_data) {
-                    alert(s_data.error)
-                },
-                dataType: "json",
-            });
-
-        }
-
-        function fun() {
-            var msg = document.getElementById('files').value;
-            if (msg == "") {
-                alert("请先选择文件");
-                return false;
-            }
-        }
-
-        var msg = "{{ msg }}";
-        if (msg == "upload_fail") {
-            alert('{{ content }}')
-        } else if (msg == "upload_success") {
-            alert('{{ data }}')
-        } else if (msg == "null_fail") {
-            alert('{{ content }}')
-        }
-    </script>
-{% endblock %}
 

@@ -14,6 +14,11 @@
 
     {% endblock %}
 
+    {% block js %}
+        <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
+
+    {% endblock %}
+
 </head>
 
 
@@ -22,7 +27,7 @@
 {% block nav %}
     <ul class="hList">
         <li class="lics">
-            <a href="#click" style="text-decoration: none;" class="menu">
+            <a href="{% url 'home' %}" style="text-decoration: none;" class="menu">
                 <h2 class="menu-title">首页</h2>
                 <ul class="menu-dropdown ulcs">
                     <li>发言</li>
@@ -70,10 +75,5 @@
 
 </body>
 
-
-{% block js %}
-    <script src="{% static 'js/jquery-3.3.1.js' %}"></script>
-
-{% endblock %}
 
 </html>
