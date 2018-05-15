@@ -46,32 +46,3 @@ function fun() {
     }
 }
 
-var msg = "{{ msg }}";
-if (msg == "upload_success") {
-    alert('{{ data }}')
-} else if (msg == "null_fail") {
-    alert('{{ data }}')
-}
-
-function page(a) {
-    if (a) {
-        $.ajax({
-            type: 'GET',
-            url: '/upload/',
-            dataType: 'json',
-            success: function (data) {
-                var f_id = '';
-                var name = '';
-                var file = '';
-                for (var i=0; i<5; i++) {
-                    f_id = data['id'];
-                    name = data['name'];
-                    file = data['file'];
-                }
-                document.getElementById("demo").innerHTML=x;
-                document.getElementById("demo").innerHTML=x;
-                document.getElementById("demo").innerHTML=x;
-            }
-        })
-    }
-}

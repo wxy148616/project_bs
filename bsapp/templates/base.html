@@ -1,6 +1,6 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en" style="background-color: #e3e3e3;">
+<html lang="en" style="background-color: rgba(133,124,78,0.11);">
 <head>
     <meta charset="UTF-8">
 
@@ -22,56 +22,57 @@
 </head>
 
 
-<body style="background-color: #e3e3e3;">
+<body style="background-color: #cccccc00;">
+<nav style="margin-top: -30px">
+    {% block nav %}
+        <ul class="hList">
+            <li class="lics">
+                <a href="{% url 'home' %}" style="text-decoration: none;" class="menu">
+                    <h2 class="menu-title">首页</h2>
+                    <ul class="menu-dropdown ulcs">
+                        <li>发言</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="#click" style="text-decoration: none;" class="menu">
+                    <h2 class="menu-title menu-title_2nd">图片</h2>
+                    <ul class="menu-dropdown ulcs">
+                        <li>文件</li>
+                        <li>图片</li>
+                        <li>音乐</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="#click" style="text-decoration: none;" class="menu">
+                    <h2 class="menu-title menu-title_3rd">音乐</h2>
+                    <ul class="menu-dropdown ulcs">
+                        <li>文件</li>
+                        <li>图片</li>
+                        <li>音乐</li>
 
-{% block nav %}
-    <ul class="hList">
-        <li class="lics">
-            <a href="{% url 'home' %}" style="text-decoration: none;" class="menu">
-                <h2 class="menu-title">首页</h2>
-                <ul class="menu-dropdown ulcs">
-                    <li>发言</li>
-                </ul>
-            </a>
-        </li>
-        <li>
-            <a href="#click" style="text-decoration: none;" class="menu">
-                <h2 class="menu-title menu-title_2nd">上传</h2>
-                <ul class="menu-dropdown ulcs">
-                    <li>文件</li>
-                    <li>图片</li>
-                    <li>音乐</li>
-                </ul>
-            </a>
-        </li>
-        <li>
-            <a href="#click" style="text-decoration: none;" class="menu">
-                <h2 class="menu-title menu-title_3rd">下载</h2>
-                <ul class="menu-dropdown ulcs">
-                    <li>文件</li>
-                    <li>图片</li>
-                    <li>音乐</li>
+                    </ul>
+                </a>
+            </li>
+            <li>
+                <a href="#click" style="text-decoration: none;" class="menu">
+                    <h2 class="menu-title menu-title_4th">注销账户</h2>
+                    <ul class="menu-dropdown ulcs">
+                        <li>文件</li>
+                        <li>图片</li>
+                        <li>音乐</li>
+                        <li style="color: red">注销账户</li>
+                    </ul>
+                </a>
+            </li>
+        </ul>
 
-                </ul>
-            </a>
-        </li>
-        <li>
-            <a href="#click" style="text-decoration: none;" class="menu">
-                <h2 class="menu-title menu-title_4th">删除</h2>
-                <ul class="menu-dropdown ulcs">
-                    <li>文件</li>
-                    <li>图片</li>
-                    <li>音乐</li>
-                    <li style="color: red">注销账户</li>
-                </ul>
-            </a>
-        </li>
-    </ul>
+    {% endblock %}
+</nav>
 
+<main>{% block content %}主体部分{% endblock %}</main>
 
-{% endblock %}
-
-{% block content %}主体部分{% endblock %}
 
 </body>
 

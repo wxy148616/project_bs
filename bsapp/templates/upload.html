@@ -7,6 +7,15 @@
         $.ajaxSetup({
             data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
         });
+        var msg = "{{ msg }}";
+        if (msg == "upload_success") {
+            alert('{{ data }}')
+            window.location.href = window.location.href;
+            window.location.reload;
+        } else if (msg == "null_fail") {
+            alert('{{ data }}')
+        }
+
     </script>
     <script src="{% static 'js/upload.js' %}">
 
@@ -15,7 +24,8 @@
 
 
 {% block content %}
-    <div>
+    <div>aa</div>
+    <div style="margin-top: 8%">
         <h2 align="center">文件上传</h2>
         <form action="" id="f1" method="POST" class="form-inline" enctype="multipart/form-data" onsubmit="return fun()">
             {% csrf_token %}
@@ -30,7 +40,7 @@
             </div>
         </form>
     </div>
-    <table class="table table-striped" style="margin-top: 6%;">
+    <table class="table table-striped" style="border-bottom: solid #dddddd 1px;">
         <tr>
             <td><b>编号</b></td>
             <td><b>文件名称</b></td>
@@ -52,22 +62,23 @@
 
 
     {% if cus_list.has_previous %}
-            <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous">
-                <span class="btn" aria-hidden="true">&laquo;</span>
-            </a>
+        <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous">
+            <span class="btn" aria-hidden="true">&laquo;</span>
+        </a>
     {% endif %}
     {% for pg in cus_list.paginator.page_range %}
         {% if cus_list.number == pg %}
-            <span style="background-color: rgba(176,145,110,0.49)" class="btn"><a href="?page={{ pg }}">{{ pg }}</a></span>
+            <span style="background-color: rgba(176,145,110,0.49)" class="btn"><a
+                    href="?page={{ pg }}">{{ pg }}</a></span>
         {% else %}
             <span class="btn"><a href="?page={{ pg }}">{{ pg }}</a></span>
         {% endif %}
     {% endfor %}
 
     {% if cus_list.has_next %}
-            <a href="?page={{ cus_list.next_page_number }}" aria-label="Next">
-                <span class="btn" aria-hidden="true">&raquo;</span>
-            </a>
+        <a href="?page={{ cus_list.next_page_number }}" aria-label="Next">
+            <span class="btn" aria-hidden="true">&raquo;</span>
+        </a>
 
 
     {% endif %}

@@ -12,7 +12,7 @@
 <div style="color: #99000c; text-align: center">{{ content }}</div>
 
 <div class="content">
-    <h1 class="content-title">登录</h1>
+    <h1 class="content-title" style="color: #33333388">登录</h1>
     <div class="content-form">
         <form id="form_sample_eventAdd" action="{% url 'login' %}" method="POST" onsubmit="return submitTest('login')">
             {% csrf_token %}
@@ -34,9 +34,9 @@
     <div class="content-login-description">没有账号？</div>
     <div><a href="{% url 'regist' %}" class="content-login-link">注册</a></div>
 </div>
-    <div>
+    <div style="margin-top: 20px;text-align:  center;color:  red;">
     <span>
-        {% if msg == False %}
+        {% if msg == "301" %}
         {{ data }}
         {% endif %}
     </span>

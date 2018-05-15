@@ -130,5 +130,5 @@ MEDIA_URL = '/media/'
 MEDIA_ROOT = "/Users/wangxvyang/Desktop/media_bs"
 
 
-SESSION_COOKIE_AGE = 60 * 10
+SESSION_COOKIE_AGE = 60 * 20
 SESSION_EXPIRE_AT_BROWSER_CLOSE = False

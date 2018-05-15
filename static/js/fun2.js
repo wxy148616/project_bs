@@ -43,6 +43,15 @@ function oFocus_2() {
 function submitTest() {
     var name = document.getElementById("name").value;
     var psw = document.getElementById("psw").value;
+    var phone = document.getElementById("phone").value;
+    if (phone.length != 11) {
+        alert('请输入正确的手机号')
+    }
+
+    var myreg = /^1[3|4|5|8|6|7|9][0-9]\d{4,8}$/;
+    if (!myreg.test(phone)) {
+        alert('请输入有效的手机号')
+    }
     if (!name && !psw) { //用户框value值和密码框value值都为空
         document.getElementById("remind_1").innerHTML = "请输入用户名！";
         document.getElementById("change_margin_1").style.marginBottom = 1 + "px";
