@@ -1,5 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
+
+
+{% block title %}
+主页
+{% endblock %}
+
 {% block css %}
     <link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css"
           integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
@@ -7,17 +13,36 @@
         body {
             background-color: #ddd;
         }
+
+        .btn-d {
+            color: #000000;
+            background-color: #f9f7f700;
+            border-color: #948282;
+        }
+
+        .btn-d:hover {
+            color: #6e6859;
+            background-color: #f9f7f700;
+            border-color: #948282;
+        }
+
+        .navbar-default {
+            /* background-color: #f8f8f8; */
+            border-color: #ffffff00;
+        }
     </style>
 
 {% endblock %}
+
 {% block nav %}
-    <nav class="navbar navbar-default navbar-fixed-bottom">
+    <nav class="navbar navbar-default navbar-fixed-bottom" style="background-color: #fff0; margin-bottom: 1%">
         <div class="container">
             <div class="form-group">
-                <input id="con" type="text" class="form-control" placeholder="请输入你想说的话" name="content">
+                <input style=" background-color: #fdfafa7d;" id="con" type="text" class="form-control"
+                       placeholder="请输入你想说的话" name="content">
             </div>
-            <button type="submit" onclick="from()" class="btn btn-default">发言</button>
-            <a type="submit" href="{% url 'upload' %}" class="btn btn-default">上传文件</a>
+            <a type="submit" onclick="from()" class="btn btn-d">发言</a>
+            <a style="float: right;" type="submit" href="{% url 'upload' %}" class="btn btn-d">上传文件</a>
         </div>
     </nav>
 {% endblock %}
@@ -26,7 +51,7 @@
 {% block content %}
     <div style="border-style: solid; color: #ddd;">
         {% if msg == True %}
-            <a style="float: right; color: black;">欢迎到来，{{ user_name }}</a>
+            <a style="float: right; color: black; margin-top: 1%; text-decoration:none;">{{ user_name }}, 你好</a>
         {% endif %}
     </div>
     <h1 style="align-content: center; font-family:楷体; size: auto">
@@ -39,7 +64,7 @@
             <div>{{ foo.content }} <span>{{ foo.timestamp }}</span></div>
         {% endfor %}
     </div>
-
+<h2 id="tt"></h2>
 {% endblock %}
 
 
@@ -52,6 +77,7 @@
             if (!con) {
                 request.abort();
             }
+            var clicktag = 0;
 
             $.ajaxSetup({
                 data: {csrfmiddlewaretoken: '{{ csrf_token }}'}
@@ -64,7 +90,16 @@
                 data: {'content': $('#con').val()},
                 success: function (result) {
                     if (result.success == "true") {
-                        alert(result.content)
+                        {#alert(result.content);#}
+                        document.getElementById('tt').innerHTML= result.content;
+                        if (clicktag == 0) {
+                            clicktag = 1;
+                        }
+                        {#window.location.href = window.location.href;#}
+                        {#window.location.reload;#}
+                        setTimeout(function () {
+                            clicktag = 0
+                        }, 5000);
                     } else if (result.success == 'false') {
                         alert('cuo')
                     }

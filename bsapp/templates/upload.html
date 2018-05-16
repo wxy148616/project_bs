@@ -1,6 +1,11 @@
 {% extends 'base.html' %}
 {% load static %}
 
+{% block title %}
+上传
+{% endblock %}
+
+
 {% block js %}
     <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
     <script type="text/javascript">
@@ -25,64 +30,61 @@
 
 {% block content %}
     <div>aa</div>
-    <div style="margin-top: 8%">
+    <div style="margin-top: 110px">
         <h2 align="center">文件上传</h2>
         <form action="" id="f1" method="POST" class="form-inline" enctype="multipart/form-data" onsubmit="return fun()">
             {% csrf_token %}
             <div class="form-group">
-                <div>
+                <div style="margin-bottom: 8px;">
                     <span class="btn">文件名称</span>
-                    <input type="text" placeholder="请输入文件名" name="name">
+                    <input class="form-control" style="background-color: #fdfdfdbd;" type="text" placeholder="请输入文件名"
+                           name="name">
                 </div>
                 <span class="btn">选择文件</span>
-                <input type="file" class="form-control" name="files" id="files">
+                <input style="background-color: #fdfdfdbd;" type="file" class="form-control" name="files" id="files">
                 <button class="btn btn-primary" type="submit" id="sub">开始上传</button>
             </div>
         </form>
     </div>
-    <table class="table table-striped" style="border-bottom: solid #dddddd 1px;">
-        <tr>
-            <td><b>编号</b></td>
-            <td><b>文件名称</b></td>
-            <td><b>路径名称</b></td>
-            <td style="text-align:center;"><b>编辑</b></td>
-        </tr>
-        {% for files in cus_list %}
+    <div style="height: 320px;">
+        <table class="table table-striped" style="border-bottom: solid #dddddd 1px; margin-top: 20px; table-layout: fixed">
             <tr>
-                <td>{{ files.0 }}</td>
-                <td>{{ files.1 }}</td>
-                <td>{{ files.2 }}</td>
-                <td style="text-align:right;">
-                    <a class="btn btn-info" href="/download/?id={{ files.0 }}">下载</a>
-                    <button type="button" onclick="tantan({{ files.0 }})" class="btn btn-danger">删除</button>
-                </td>
+                <td><b>编号</b></td>
+                <td><b>文件名称</b></td>
+                <td><b>路径名称</b></td>
+                <td style="text-align:center;"><b>编辑</b></td>
             </tr>
-        {% endfor %}
-    </table>
-
-
+            {% for files in cus_list %}
+                <tr>
+                    <td>{{ files.0 }}</td>
+                    <td>{{ files.1 }}</td>
+                    <td>{{ files.2 }}</td>
+                    <td style="text-align:right;">
+                        <a class="btn btn-info" href="/download/?id={{ files.0 }}">下载</a>
+                        <button type="button" onclick="tantan({{ files.0 }})" class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+<div style="text-align: right;">
     {% if cus_list.has_previous %}
-        <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous">
-            <span class="btn" aria-hidden="true">&laquo;</span>
-        </a>
+        <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous" class="btn"
+           aria-hidden="true">&laquo;</a>
     {% endif %}
     {% for pg in cus_list.paginator.page_range %}
         {% if cus_list.number == pg %}
-            <span style="background-color: rgba(176,145,110,0.49)" class="btn"><a
-                    href="?page={{ pg }}">{{ pg }}</a></span>
+            <a style="background-color: #dddd" class="btn" href="?page={{ pg }}">{{ pg }}</a>
         {% else %}
-            <span class="btn"><a href="?page={{ pg }}">{{ pg }}</a></span>
+            <a class="btn" href="?page={{ pg }}">{{ pg }}</a>
         {% endif %}
     {% endfor %}
 
     {% if cus_list.has_next %}
-        <a href="?page={{ cus_list.next_page_number }}" aria-label="Next">
-            <span class="btn" aria-hidden="true">&raquo;</span>
-        </a>
-
+        <a href="?page={{ cus_list.next_page_number }}" aria-label="Next" class="btn" aria-hidden="true">&raquo;</a>
 
     {% endif %}
-
+</div>
 
     <div style="text-align: center">
         {% if msg == "upload_fail" %}

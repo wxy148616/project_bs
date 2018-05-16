@@ -4,6 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render
 from django.http import HttpResponse, FileResponse, HttpResponseRedirect
 from models import *
+from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 import json, re
 import os
@@ -51,32 +52,37 @@ def regist(request):
 
 
 def home(request):
-    if request.method == "GET":
-        user_name = request.session.get('name')
-        if user_name:
-            if user_name == 'yangjunxia':
+    user_id = request.session.get("user_id")
+    if user_id:
+        if request.method == "GET":
+            user_name = request.session.get('name')
+            if user_name:
+                if user_name == 'yangjunxia':
+                    return render(request, 'home.html', context = dict(
+                        msg = 'wxy',
+                        data = "I Love You"
+                        ))
                 return render(request, 'home.html', context = dict(
-                    msg = 'wxy',
-                    data = "I Love You"
+                    user_name=user_name,
+                    msg = True
                     ))
-            return render(request, 'home.html', context = dict(
-                user_name=user_name,
-                msg = True
-                ))
-        else:
-            return HttpResponseRedirect('/')
-    elif request.method == "POST":
-        user_id = request.session.get("user_id")
-        user_obj = Users.objects.get(id=user_id)
-        content = str(request.POST.get('content'))
-        pattern = '^\s*|\s*$'
-        content = re.sub(pattern, '', content)
-        Contents.objects.create(
-            content = content,
-            users = user_obj,
-            )
-        data = {"success": 'true', "content": content}
-        return HttpResponse(json.dumps(data))
+            else:
+                return HttpResponseRedirect('/')
+        elif request.method == "POST":
+            user_obj = Users.objects.get(id=user_id)
+            content = str(request.POST.get('content'))
+            pattern = '^\s*|\s*$'
+            content = re.sub(pattern, '', content)
+            Contents.objects.create(
+                content = content,
+                users = user_obj,
+                )
+            data = {"success": 'true', "content": content}
+            return HttpResponse(json.dumps(data))
+    return render(request, 'login.html', context = dict(
+        status = 10,
+        content = u"登录超时，请重新登录"
+        ))
 
 
 def upload(request):
@@ -116,8 +122,7 @@ def upload(request):
             user_id = request.session.get('user_id')
             user_obj = Users.objects.get(id=user_id)
             if uf:
-                ufname = u'/Users/wangxvyang/Desktop/media_bs/%s' % uf.name
-
+                ufname = os.path.join(settings.MEDIA_ROOT, uf.name)
                 with open(ufname, 'wb') as f:
                     for x in uf.chunks():
                         f.write(x)
@@ -137,12 +142,12 @@ def upload(request):
 
 
 def file_download(request):
-    from pypinyin import lazy_pinyin, pinyin
+    from pypinyin import lazy_pinyin
     if request.method == "GET":
         f_id = request.GET.get('id')
         fname = str(Files.objects.get(id=f_id).files).decode('utf-8')
         name = re.sub(r"(.*?)(?=/)/", "", fname)
-        src = u'/Users/wangxvyang/Desktop/media_bs/%s' % fname
+        src = os.path.join(settings.MEDIA_ROOT, fname)
         try:
             p_name = lazy_pinyin(name)
             name = "".join(p_name)
@@ -160,13 +165,13 @@ def delete_file(request):
     if request.method == "POST":
         f_id = request.POST.get('id')
         fname = str(Files.objects.get(id=f_id).files).decode('utf-8')
-        my_file = u'/Users/wangxvyang/Desktop/media_bs/%s' % fname
+        my_file = os.path.join(settings.MEDIA_ROOT, fname)
         if os.path.exists(my_file):
             import shutil
             # 删除之前备份
             oldname = my_file
             name = re.sub(r"(.*?)(?=/)/", "", fname)
-            newname = u"/Users/wangxvyang/Desktop/beifen/%s" % name
+            newname = os.path.join(settings.MEDIA_ROOT + "/beifen/", name)
             shutil.copyfile(oldname, newname)
             # 删除文件
             os.remove(my_file)
