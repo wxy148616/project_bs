@@ -23,7 +23,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = '$$7lqnor3aqen%m9uryos^&=-qp#1_)3c+ze4q)!4a24q%o*)e'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
     'bsapp',
 ]
 
@@ -127,7 +128,7 @@ STATIC_URL = '/static/'
 STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join("/root/python/", 'media_bs')
+MEDIA_ROOT = os.path.join("/Users/wangxvyang/Desktop/", 'media_bs')
 
 
 SESSION_COOKIE_AGE = 60 * 20

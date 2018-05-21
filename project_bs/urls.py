@@ -24,5 +24,7 @@ urlpatterns = [
     url(r'^upload/', bs_views.upload, name = 'upload'),
     url(r'^download/', bs_views.file_download, name = 'download'),
     url(r'^delete/', bs_views.delete_file, name = 'delete'),
+    url(r'^bs/$', bs_views.snippet_list, name = 'bs'),
+    url(r'^bs/(?P<id>[0-9]+)/$', bs_views.snippet_detail, name = 'bs_detail'),
     url(r'^admin/', admin.site.urls),
 ]

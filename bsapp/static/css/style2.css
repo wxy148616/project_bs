@@ -66,10 +66,10 @@ input {
             box-shadow: 0 0 5px #0dbfdd;
 }
 .content-form-signup {
-    width: 20%;
+    width: 30%;
     margin: 0 auto;
     padding: 10px;
-    border: 1px solid  #000000;
+    border: 1px solid  #808080;
     border-radius: 7px;
     font-size: 1em;
     font-weight: bold;

@@ -2,7 +2,11 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render
-from django.http import HttpResponse, FileResponse, HttpResponseRedirect
+from django.http import HttpResponse, FileResponse, HttpResponseRedirect, JsonResponse
+from rest_framework.parsers import JSONParser
+from bsapp.serializers import BsappSerializer
+from django.views.decorators.csrf import csrf_exempt
+from pypinyin import lazy_pinyin
 from models import *
 from django.conf import settings
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
@@ -142,7 +146,6 @@ def upload(request):
 
 
 def file_download(request):
-    from pypinyin import lazy_pinyin
     if request.method == "GET":
         f_id = request.GET.get('id')
         fname = str(Files.objects.get(id=f_id).files).decode('utf-8')
@@ -181,3 +184,40 @@ def delete_file(request):
             return HttpResponse(json.dumps(dict(status=200, content_type='application/json')))
         else:
             return HttpResponse(json.dumps(dict(status=300, content_type='application/json')))
+
+
+@csrf_exempt
+def snippet_list(request):
+    if request.method == "GET":
+        obj = Users.objects.all()
+        serializer = BsappSerializer(obj, many = True)
+        return JsonResponse(serializer.data, safe = False)
+    elif request.method == "POST":
+        data = JSONParser().parse(request)
+        serializer = BsappSerializer(data = data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data, status = 201)
+
+        return JsonResponse(serializer.errors, status = 400)
+
+
+@csrf_exempt
+def snippet_detail(request, id):
+    try:
+        obj = Users.objects.get(id = id)
+    except Users.DoesNotExist:
+        return HttpResponse(status = 400)
+    if request.method == 'GET':
+        serializer = BsappSerializer(obj)
+        return JsonResponse(serializer.data)
+    elif request.method == "PUT":
+        data = JSONParser().parse(request)
+        serializer = BsappSerializer(obj, data=data)
+        if serializer.is_valid():
+            serializer.save()
+            return JsonResponse(serializer.data)
+        return JsonResponse(serializer.errors, status = 400)
+    elif request.method == "DELETE":
+        obj.delete()
+        return HttpResponse(status = 204)
