@@ -26,7 +26,7 @@ def login(request):
                     request.session['user_id'] = obj.id
                     request.session['name'] = obj.name
                     request.session['psw'] = obj.psw
-                    return HttpResponseRedirect('/home/')
+                    return HttpResponseRedirect('/upload/')
         return render(request, 'login.html', context = dict(
             data = u"用户名或密码错误^_^",
             msg = "301"
@@ -44,7 +44,7 @@ def regist(request):
         if Users.objects.filter(name = name):
             return render(request, 'regist.html', context = dict(
                 data = u"用户名已存在^_^",
-                msg = False
+                msg ='False'
                 ))
         obj = Users(name = name, psw = psw, phone = phone)
         obj.save()
@@ -57,6 +57,10 @@ def home(request):
         if request.method == "GET":
             user_name = request.session.get('name')
             if user_name:
+                cons = Contents.objects.all().values_list("content").order_by('-id')[:10]
+		lis_con = []
+		for x in cons:
+		    lis_con.append(x[0])
                 if user_name == 'yangjunxia':
                     return render(request, 'home.html', context = dict(
                         msg = 'wxy',
@@ -64,6 +68,7 @@ def home(request):
                         ))
                 return render(request, 'home.html', context = dict(
                     user_name=user_name,
+		    con = lis_con,
                     msg = True
                     ))
             else:
@@ -181,3 +186,37 @@ def delete_file(request):
             return HttpResponse(json.dumps(dict(status=200, content_type='application/json')))
         else:
             return HttpResponse(json.dumps(dict(status=300, content_type='application/json')))
+
+
+def search(request):
+    user_id = request.session.get('user_id')
+    if user_id:
+        if request.method == "POST":
+            data = request.POST.get('val')
+            user_obj = Users.objects.get(id = user_id)
+            files_list = user_obj.files_set.filter(files__icontains = data).values_list('id', 'name', 'files').order_by('-id')[:10]
+            paginator = Paginator(files_list, 10)
+            page = request.GET.get('page')
+            try:
+                customer = paginator.page(page)
+            except PageNotAnInteger:
+                customer = paginator.page(1)
+            except EmptyPage:
+                customer = paginator.page(paginator.num_pages)
+            if files_list:
+                return render(request, 'search.html', context = dict(
+                    files_list = files_list,
+                    cus_list = customer,
+                    msg = "200"
+                    ))
+            return render(request, 'search.html', context = dict(
+                content = u"找～找不到了",
+                msg = "upload_fail",
+                ))
+        if request.method == "GET":
+            return render(request, 'search.html')
+    return render(request, 'login.html', context = dict(
+        status = 10,
+        content = u'登录超时，请重新登录！'
+        ))
+

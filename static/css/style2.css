@@ -10,7 +10,9 @@ hgroup, menu, nav, output, section, summary, time, mark, audio, video {
 }
 body {
     font-family: "微软雅黑";
-    background: #f4f4f4;
+}
+input {
+    background-color: #ffffffb0;
 }
 
 /*header*/
@@ -39,9 +41,9 @@ body {
 .content-form {
     width: 100%;
     padding: 36px 0 20px;
-    border: 1px solid  #dedede;
+    border: 1px solid  #fff0;
     text-align: center;
-    background: #fff;
+    background: #fff0;
 }
 .content-form form div {
     margin-bottom: 19px;
@@ -63,33 +65,33 @@ body {
             box-shadow: 0 0 5px #0dbfdd;
 }
 .content-form-signup {
-    width: 84%;
+    width: 30%;
     margin: 0 auto;
     padding: 10px;
-    border: 1px solid  #cccbcb;
+    border: 1px solid  #808080;
     border-radius: 7px;
     font-size: 1em;
     font-weight: bold;
-    color: #fff;
-    background: #0dbfdd;
+    color: #fdffffd1;
+    background: #0dbfdd00;
     cursor: pointer;
 }
 .content-form-signup:hover {
-    background: #0cb3d0;
+    background: #0a0a0a21;
 }
 .content-form-signup:focus {
     outline: none;
-    border: 1px solid  #0cb3d0;
+    border: 1px solid  #0cb3d000;
 }
 .content-login-description {
     margin-top: 25px;
     line-height: 1.63636364;
-    color: #747474;
+    color: #000000;
     font-size: .91666667rem;
 }
 .content-login-link {
     font-size: 16px;
-    color: #0dbfdd;
+    color: #fdffffd1;
     text-decoration: none;
 }
 

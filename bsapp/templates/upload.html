@@ -2,7 +2,7 @@
 {% load static %}
 
 {% block title %}
-上传
+    上传
 {% endblock %}
 
 
@@ -26,10 +26,13 @@
 
     </script>
 {% endblock %}
+{% block nav %}
 
+{% endblock %}
 
 {% block content %}
-    <div>aa</div>
+    <a style="float: right; background-color: #ffffff" type="submit" href="{% url 'home' %}" class="btn btn-d">谈一弹</a>
+    <a style="margin-right: 10px ; float: right; background-color: #ffffcc" type="submit" href="{% url 'search' %}" class="btn btn-d">搜一艘</a>
     <div style="margin-top: 110px">
         <h2 align="center">文件上传</h2>
         <form action="" id="f1" method="POST" class="form-inline" enctype="multipart/form-data" onsubmit="return fun()">
@@ -47,7 +50,8 @@
         </form>
     </div>
     <div style="height: 320px;">
-        <table class="table table-striped" style="border-bottom: solid #dddddd 1px; margin-top: 20px; table-layout: fixed">
+        <table class="table table-striped"
+               style="border-bottom: solid #dddddd 1px; margin-top: 20px; table-layout: fixed">
             <tr>
                 <td><b>编号</b></td>
                 <td><b>文件名称</b></td>
@@ -67,24 +71,24 @@
             {% endfor %}
         </table>
     </div>
-<div style="text-align: right;">
-    {% if cus_list.has_previous %}
-        <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous" class="btn"
-           aria-hidden="true">&laquo;</a>
-    {% endif %}
-    {% for pg in cus_list.paginator.page_range %}
-        {% if cus_list.number == pg %}
-            <a style="background-color: #dddd" class="btn" href="?page={{ pg }}">{{ pg }}</a>
-        {% else %}
-            <a class="btn" href="?page={{ pg }}">{{ pg }}</a>
+    <div style="text-align: right;">
+        {% if cus_list.has_previous %}
+            <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous" class="btn"
+               aria-hidden="true">&laquo;</a>
         {% endif %}
-    {% endfor %}
+        {% for pg in cus_list.paginator.page_range %}
+            {% if cus_list.number == pg %}
+                <a style="background-color: #dddd" class="btn" href="?page={{ pg }}">{{ pg }}</a>
+            {% else %}
+                <a class="btn" href="?page={{ pg }}">{{ pg }}</a>
+            {% endif %}
+        {% endfor %}
 
-    {% if cus_list.has_next %}
-        <a href="?page={{ cus_list.next_page_number }}" aria-label="Next" class="btn" aria-hidden="true">&raquo;</a>
+        {% if cus_list.has_next %}
+            <a href="?page={{ cus_list.next_page_number }}" aria-label="Next" class="btn" aria-hidden="true">&raquo;</a>
 
-    {% endif %}
-</div>
+        {% endif %}
+    </div>
 
     <div style="text-align: center">
         {% if msg == "upload_fail" %}
@@ -92,6 +96,4 @@
         {% endif %}
     </div>
 {% endblock %}
-
-
 

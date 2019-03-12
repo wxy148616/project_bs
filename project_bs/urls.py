@@ -24,5 +24,6 @@ urlpatterns = [
     url(r'^upload/', bs_views.upload, name = 'upload'),
     url(r'^download/', bs_views.file_download, name = 'download'),
     url(r'^delete/', bs_views.delete_file, name = 'delete'),
+    url(r'^search/', bs_views.search, name = 'search'),
     url(r'^admin/', admin.site.urls),
 ]

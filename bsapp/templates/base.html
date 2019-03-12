@@ -1,10 +1,12 @@
 {% load static %}
 <!DOCTYPE html>
-<html lang="en"  style="background-image:url('{% static 'img/4.jpg' %}')">
+<html lang="en" style="background-image:url('{% static 'img/4.jpg' %}')">
 {#style="background-color: rgba(133,124,78,0.11);"#}
 <head>
-<link rel="icon" href="{% static 'img/title.png' %}" type="image/x-icon"/>
+    <link rel="icon" href="{% static 'img/title.png' %}" type="image/x-icon"/>
     <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no">
 
     <title>{% block title %}标题部分{% endblock %}</title>
 
@@ -14,9 +16,15 @@
               crossorigin="anonymous">
         <link rel="stylesheet" href="{% static 'css/daohang.css' %}">
         <style>
-        .table-striped>tbody>tr:nth-of-type(odd) {
+            .table-striped > tbody > tr:nth-of-type(odd) {
                 background-color: #f1f1f18f;
-        }
+            }
+        .form-control{
+        width: 200px;
+            display: inline-block;
+            }
+
+
         </style>
     {% endblock %}
 
@@ -28,8 +36,8 @@
 </head>
 
 
-<body style="background-color: #cccccc00">
-<nav style="margin-top: -30px">
+<body style="background-color: rgba(0, 0, 0, 0);">
+<nav style="margin-top: -10px">
     {% block nav %}
         <ul class="hList">
             <li class="lics">

@@ -3,11 +3,14 @@
 <html lang="en" style="background-image: url('{% static 'img/4.jpg' %}')">
 <head>
     <meta charset="UTF-8">
-    <title>注册页面</title>
+    <title>注册</title>
     <link rel="stylesheet" href="{% static 'css/style2.css' %}">
 </head>
 <body>
 
+{% if msg == 'False' %}
+<div style="text-align: center; color: red">{{ data }}</div>
+{% endif %}
 <div class="content">
     <h1 class="content-title">创建账户</h1>
     <div class="content-form">

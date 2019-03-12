@@ -1,0 +1,100 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+搜索
+{% endblock %}
+
+{% block js %}
+    <script src="https://code.jquery.com/jquery-3.3.1.js"></script>
+    <script src="{% static 'js/upload.js' %}"></script>
+    <script type="text/javascript">
+        $.ajaxSetup({
+            data: {'csrfmiddlewaretoken': '{{ csrf_token }}'},
+        });
+        var msg = "{{ msg }}";
+        if (msg == "upload_success") {
+            alert('{{ data }}')
+            window.location.href = window.location.href;
+            window.location.reload;
+        } else if (msg == "null_fail") {
+            alert('{{ data }}')
+        }
+        function se() {
+            var ss = document.getElementById('ss').value;
+            if (!ss) {
+                return false;
+            }
+        }
+
+
+    </script>
+{% endblock %}
+
+{% block nav %}
+
+{% endblock %}
+
+{% block content %}
+        <a style="float: right; background-color: #ffffff" type="submit" href="{% url 'home' %}" class="btn btn-d">谈一弹</a>
+    <a style="margin-right: 10px ; float: right; background-color: #ffffcc" type="submit" href="{% url 'upload' %}" class="btn btn-d">传一船</a>
+
+    <form action="{% url 'search' %}" method="POST" onsubmit="return se()">
+        {% csrf_token %}
+        <div style="margin-top: 110px">
+            <h2 align="center">文件搜索</h2>
+            <div class="form-group">
+                <span class="btn">文件名称</span>
+                <input class="form-control" id="ss" style="background-color: #fdfdfdbd;" type="text" placeholder="请输入文件名"
+                       name="val" autocomplete="off">
+                <input class="btn btn-primary" type="submit" id="sub" value="搜索">
+            </div>
+        </div>
+    </form>
+    <div style="height: 320px;">
+        <table class="table table-striped"
+               style="border-bottom: solid #dddddd 1px; margin-top: 20px; table-layout: fixed">
+            <tr>
+                <td><b>编号</b></td>
+                <td><b>文件名称</b></td>
+                <td><b>路径名称</b></td>
+                <td style="text-align:center;"><b>编辑</b></td>
+            </tr>
+            {% for files in cus_list %}
+                <tr>
+                    <td>{{ files.0 }}</td>
+                    <td>{{ files.1 }}</td>
+                    <td>{{ files.2 }}</td>
+                    <td style="text-align:right;">
+                        <a class="btn btn-info" href="/download/?id={{ files.0 }}">下载</a>
+                        <button type="button" onclick="tantan({{ files.0 }})" class="btn btn-danger">删除</button>
+                    </td>
+                </tr>
+            {% endfor %}
+        </table>
+    </div>
+    {#    <div style="text-align: right;">#}
+    {#        {% if cus_list.has_previous %}#}
+    {#            <a href="?page={{ cus_list.previous_page_number }}" aria-label="Previous" class="btn"#}
+    {#               aria-hidden="true">&laquo;</a>#}
+    {#        {% endif %}#}
+    {#        {% for pg in cus_list.paginator.page_range %}#}
+    {#            {% if cus_list.number == pg %}#}
+    {#                <a style="background-color: #dddd" class="btn" href="?page={{ pg }}">{{ pg }}</a>#}
+    {#            {% else %}#}
+    {#                <a class="btn" href="?page={{ pg }}">{{ pg }}</a>#}
+    {#            {% endif %}#}
+    {#        {% endfor %}#}
+    {##}
+    {#        {% if cus_list.has_next %}#}
+    {#            <a href="?page={{ cus_list.next_page_number }}" aria-label="Next" class="btn" aria-hidden="true">&raquo;</a>#}
+    {##}
+    {#        {% endif %}#}
+    {#    </div>#}
+
+    <div style="text-align: center">
+        {% if msg == "upload_fail" %}
+            {{ content }}
+        {% endif %}
+    </div>
+{% endblock %}
+
